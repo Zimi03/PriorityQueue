@@ -2,14 +2,15 @@
 #include "List(head).h"
 #include "Dynamic array.h"
 #include "List(head, tail).h"
+#include "BinaryHeap.h"
 
 
 using namespace std;
 
 
-void display(List_h<prio>* list){
+void display(DynamicArray<priorityValue>* list){
     int i = 0;
-    optional<prio> value;
+    optional<priorityValue> value;
     value = list->get(i);
     while(value != nullopt) {
         cout << value.value() << ", ";
@@ -20,22 +21,22 @@ void display(List_h<prio>* list){
 }
 
 
-void structure_test(List_h<prio>* lista){
+void structure_test(DynamicArray<priorityValue>* lista){
     for(int i = 0; i < 10; i ++){
-        lista->insertFront(prio(i,'A'));
+        lista->insertFront(priorityValue(i, 'A'));
     }
     display(lista);
 
-    lista->insert(1, prio(20,'X'));
+    lista->insert(1, priorityValue(20, 'X'));
     display(lista);
 
-    lista->insertBack(prio(30,'Y'));
+    lista->insertBack(priorityValue(30, 'Y'));
     display(lista);
 
-    lista->insertFront(prio(40,'Z'));
+    lista->insertFront(priorityValue(40, 'Z'));
     display(lista);
 
-    optional<prio> removed = lista->removeFront();
+    optional<priorityValue> removed = lista->removeFront();
     if (removed==nullopt) {
         cout << "Removed first: NULLOPT" << endl;
     } else {
@@ -59,19 +60,50 @@ void structure_test(List_h<prio>* lista){
     }
     display(lista);
 
-    int found = lista->find(prio(0,'A'));
+    int found = lista->find(priorityValue(0, 'A'));
     cout << "Found 0, A on: " << found << " index" << endl;
 }
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
-    List_h<prio> lista;
-    DynamicArray<prio> arr;
-    List_h_t<prio> lista_ht;
+    List_h<priorityValue> lista;
+    DynamicArray<priorityValue> arr;
+    List_h_t<priorityValue> lista_ht;
 
 
-    structure_test(&lista_ht);
+//    structure_test(&arr);
 
+
+    BinaryHeap bin;
+    int count = 0;
+    for(int i = 0; i < 6; i ++) {
+        bin.insert(priorityValueOrder(i, 9, count++));
+        bin.insert(priorityValueOrder(i, 10, count++));
+    }
+    bin.display();
+    bin.modifyKey(priorityValue(5,9), 4, count++);
+    bin.modifyKey(priorityValue(3,10), 5, count++);
+    bin.remove(priorityValue(5, 10));
+    bin.increaseKey(priorityValue(5,10), count++);
+    bin.decreaseKey(priorityValue(1,10), count++);
+    bin.decreaseKey(priorityValue(0,10), count++);
+
+
+
+    cout << endl << "MODIFIED" <<endl;
+    bin.display();
+
+    BinaryHeap bin2(&bin);
+
+    for(int i = 0; i < 11; i ++) {
+        cout << "FIND MAX: " << bin2.findMax().value() << endl;
+        cout << "EXTRACT MAX: " << bin2.extractMax().value() << endl << endl;
+        if(i == 6) bin2.display();
+    }
+    cout << endl << "bin" <<endl;
+    bin.display();
+    cout << endl << "bin2" <<endl;
+    bin2.display();
 
 
 

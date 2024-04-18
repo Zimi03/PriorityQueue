@@ -236,4 +236,4 @@ inline int List_h<Data>::find(Data data) {
 
 
 template class List_h<int>;
-template class List_h<prio>;
+template class List_h<priorityValue>;

@@ -8,7 +8,8 @@
 #include <cstring>
 #include "iostream"
 #include "optional"
-#include "Prio.h"
+#include "PriorityValue.h"
+#include "PriorityValueOrder.h"
 
 template <typename Data>
 class DynamicArray {
@@ -21,6 +22,8 @@ public:
     explicit DynamicArray(DynamicArray *to_copy);
     int getSize() ;
     int isEmpty() ;
+    int swap(int a, int b);
+    int change(int index, Data &new_value);
 
     int find(Data value) ;
     std::optional<Data> get(int index) ;

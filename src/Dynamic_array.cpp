@@ -29,15 +29,64 @@ DynamicArray<Data>::~DynamicArray(){
     delete[] array;
 }
 
+/**
+ * Returns number of elements in data structure
+ * @return size
+ */
 template <typename Data>
 int DynamicArray<Data>::getSize() {return size; } //size getter
 
+/**
+ * Function chcecks if data structure is empty
+ * @return 0 - not empty
+ * @return 1 - empty
+ */
 template <typename Data>
 int DynamicArray<Data>::isEmpty() {
     if (size == 0) return 1;
     else return 0;
 }
 
+/**
+ * Swap of two elements in array if indexes are correct and different from each other
+ * @tparam Data
+ * @param a
+ * @param b
+ * @return 0 - success
+ * @return 1 - failure
+ */
+template <typename Data>
+int DynamicArray<Data>::swap(int a, int b) {
+    if(a >= 0 && a < size && b >= 0 && b < size && a != b){
+        Data tmp = array[a];
+        array[a] = array[b];
+        array[b] = tmp;
+        return 0;
+    } else return 1;
+}
+
+/**
+ * Chnages element on given index
+ * @tparam Data
+ * @param index
+ * @param new_value
+ * @return 0 - succes
+ * @return 1 - failure
+ */
+template <typename Data>
+int DynamicArray<Data>::change(int index, Data &new_value) {
+    if(index >= 0 && index < size){
+        array[index] = new_value;
+        return 0;
+    } return  1;
+}
+
+/**
+ * Searches for given data and returns index
+ * @param data
+ * @return -1 - not found
+ * @return >0 - found index
+ */
 template <typename Data>
 int DynamicArray<Data>::find(Data value){
     for (int i = 0; i < size; i++){
@@ -48,6 +97,12 @@ int DynamicArray<Data>::find(Data value){
     return -1; // returning -1 if value doesn't exist in array
 }
 
+/**
+ * Returns data on given index
+ * @param index
+ * @return data - if index ok
+ * @return std::nullopt - if index wrong
+ */
 template <typename Data>
 std::optional<Data> DynamicArray<Data>::get(int index) {
     if(index >= 0 && index < size) {
@@ -63,6 +118,10 @@ void DynamicArray<Data>::init(Data data){
     insertBack(data);
 }
 
+/**
+ * Inserts element on front
+ * @param data
+ */
 template <typename Data>
 void DynamicArray<Data>::insertFront(Data data){
     if (size == capacity) {
@@ -76,6 +135,13 @@ void DynamicArray<Data>::insertFront(Data data){
     size ++; // growing size of array
 }
 
+/**
+ * Inserts element on given index if possible
+ * @param data
+ * @param index
+ * @return 0 - success
+ * @return 1 - fail
+ */
 template <typename Data>
 int DynamicArray<Data>::insert(int index, Data data) {
     if (index == 0 ) {
@@ -100,6 +166,10 @@ int DynamicArray<Data>::insert(int index, Data data) {
     return 1;
 }
 
+/**
+ * Inserts element to the end of data structure
+ * @param data
+ */
 template <typename Data>
 void DynamicArray<Data>::insertBack(Data data){
     if(size == capacity) grow(); // growing array if needed
@@ -107,6 +177,11 @@ void DynamicArray<Data>::insertBack(Data data){
     size++; // growing size of array
 }
 
+/**
+ * Removes first element from data structure
+ * @return data from removed element - if index ok
+ * @return std::nullopt - if empty
+ */
 template <typename Data>
 std::optional<Data> DynamicArray<Data>::removeFront() {
     if(size != 0) {
@@ -122,6 +197,11 @@ std::optional<Data> DynamicArray<Data>::removeFront() {
 }
 
 
+/**
+ * Removes element from the given index from data structure
+ * @return data from removed element - if index ok
+ * @return std::nullopt - if wrong index
+ */
 template <typename Data>
 std::optional<Data> DynamicArray<Data>::remove(int index){
 
@@ -137,6 +217,11 @@ std::optional<Data> DynamicArray<Data>::remove(int index){
         return data;
 }
 
+/**
+ * Removes element from the end of data structure
+ * @return data from removed element - if index ok
+ * @return std::nullopt - if empty
+ */
 template <typename Data>
 std::optional<Data> DynamicArray<Data> ::removeBack(){
     if(size == 0) return std::nullopt;
@@ -166,4 +251,5 @@ void DynamicArray<Data> ::shrink() {
 }
 
 template class DynamicArray<int>;
-template class DynamicArray<prio>;
+template class DynamicArray<priorityValue>;
+template class DynamicArray<priorityValueOrder>;

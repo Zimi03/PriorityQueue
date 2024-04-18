@@ -32,4 +32,4 @@ Data Node<Data>::getData() {return data;}
 
 
 template class Node<int>;
-template class Node<prio>;
+template class Node<priorityValue>;

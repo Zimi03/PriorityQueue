@@ -6,7 +6,7 @@
 #define LISTY_LIST_HEAD_H
 #include "Node.h"
 #include "Head.h"
-#include "Prio.h"
+#include "PriorityValue.h"
 #include "optional"
 
 

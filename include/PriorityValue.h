@@ -5,15 +5,15 @@
 #ifndef PROJEKT2SD_PRIO_H
 #define PROJEKT2SD_PRIO_H
 
-struct prio{
+struct priorityValue{
     int priority;
     int value;
 
-    bool operator==(const prio& other) const {
+    bool operator==(const priorityValue& other) const {
         return priority == other.priority && value == other.value;
     }
     // Operator przesunięcia bitowego w prawo (wyjście)
-    friend std::ostream& operator<<(std::ostream& os, const prio& p) {
+    friend std::ostream& operator<<(std::ostream& os, const priorityValue& p) {
         os << "P: " << p.priority << ", V: " << p.value;
         return os;
     }

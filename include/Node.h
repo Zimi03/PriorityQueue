@@ -6,7 +6,7 @@
 #define LISTY_NODE_H
 #include "INode.h"
 #include <iostream>
-#include "Prio.h"
+#include "PriorityValue.h"
 
 
 

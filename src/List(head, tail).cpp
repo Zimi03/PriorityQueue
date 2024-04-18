@@ -198,4 +198,4 @@ std::optional<Data> List_h_t<Data>::get(int index) {
 }
 
 template class List_h_t<int>;
-template class List_h_t<prio>;
+template class List_h_t<priorityValue>;
