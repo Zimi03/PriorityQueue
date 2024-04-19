@@ -11,7 +11,7 @@
 
 template <typename Data>
 class List_h_t:  public List_h<Data>{ // a może dziedziczenie z klasy LIST(HEAD)
-private:
+protected:
     Tail *tail;
 
 public:

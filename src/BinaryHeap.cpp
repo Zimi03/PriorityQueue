@@ -74,7 +74,10 @@ int BinaryHeap::upHeap(int start, int end, int child) {
     return 0;
 }
 
-
+/**
+ * Inserts element in proper place in priority queue
+ * @param element
+ */
 void BinaryHeap::insert(priorityValueOrder element) {
     heap->insertBack(element);
     size = heap->getSize();

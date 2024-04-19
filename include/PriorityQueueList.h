@@ -3,10 +3,11 @@
 #include "IPriorityQueue.h"
 #include "List(head, tail).h"
 #include "PriorityValue.h"
-class PQL : public IPriorityQueue{
+class PQL : public IPriorityQueue, private List_h_t<priorityValue>{
 private:
-   List_h_t<priorityValue>* list = nullptr;
-   int size;
+    /*
+     * TU SIE ZNAJDUJE WSZYSTKO TO CO JEST W LISCIE MIMO ZE TEGO NIE WIDAC
+     */
    int findindex(priorityValue element);
 public:
     ~PQL() override;

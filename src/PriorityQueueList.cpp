@@ -1,7 +1,7 @@
 #include "PriorityQueueList.h"
 
 PQL::~PQL(){
-    delete list;
+    List_h_t::~List_h_t();
 }
 
 PQL::PQL(){
@@ -15,6 +15,8 @@ PQL::PQL(PQL *to_copy) {
 }
 
 int PQL::findindex(priorityValue element){
+    INode* current = head->getNext(); // piszesz reszte tak jakby to była funkcja w list_h_t tylko musisz znaleźć odpowiednio element
+
     int temp = element.priority;
     int i = 0;
     while (temp < list->get(i)->priority){
@@ -24,8 +26,8 @@ int PQL::findindex(priorityValue element){
 }
 
 int PQL::insert(priorityValue element) {
-    int i = findindex(element);
-    list->insert(i, element);
+    int i = find(element);
+    List_h_t<priorityValue>::insert(i, element);
 }
 
 std::optional<priorityValue> PQL::extractMax() {

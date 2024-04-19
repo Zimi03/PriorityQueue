@@ -20,5 +20,7 @@ int PriorityQueueHeap::insert(priorityValue element) {
 
 
 std::optional<priorityValue> PriorityQueueHeap::extractMax() {
-    heap->extractMax();
+    std::optional<priorityValueOrder> tmp = heap->extractMax();
+    if(tmp == std::nullopt) return std::nullopt;
+    else{
 }
