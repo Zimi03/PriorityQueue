@@ -10,6 +10,7 @@
 class PriorityQueueHeap : public IPriorityQueue{
     BinaryHeap* heap = nullptr;
     int size;
+    unsigned int count;
 
 public:
     PriorityQueueHeap();

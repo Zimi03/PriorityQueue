@@ -81,17 +81,32 @@ void BinaryHeap::insert(priorityValueOrder element) {
     upHeap(0, size-1, size-1); // upHeap od wstawionego elementu
 }
 
+/**
+ * Deletes and returns element with highest priority
+ * @return extracted element if exists
+ * @return std::nullopt if element does not exist
+ */
 std::optional<priorityValueOrder> BinaryHeap::extractMax() {
     heap->swap(0, size-1); // zamiana pierwszego z ostatnim elementem
-    priorityValueOrder tmp = heap->removeBack().value();
-    size = heap->getSize();
-    downHeap(0, size - 1, 0); // downHeap od korzenia
+    std::optional<priorityValueOrder> tmp = heap->removeBack();
+    if(tmp == std::nullopt) return std::nullopt;
+    else{
+        size = heap->getSize();
+        downHeap(0, size - 1, 0); // downHeap od korzenia
+        return tmp.value();
+    }
 
-    return tmp;
 }
 
+/**
+ * Returns element with biggest priority
+ * @return returns element if exists
+ * @return std::nullopt if element does not exist
+ */
 std::optional<priorityValueOrder> BinaryHeap::findMax() {
-    return heap->get(0).value();
+    std::optional<priorityValueOrder> tmp = heap->get(0);
+    if(tmp == std::nullopt) return std::nullopt;
+    else return tmp.value();
 }
 
 
