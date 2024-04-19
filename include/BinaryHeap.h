@@ -33,7 +33,7 @@ public:
     int increaseKey(priorityValue element, unsigned int count);
     int decreaseKey(priorityValue element, unsigned int count);
 
-
+    int getSize();
     void display();
 
 

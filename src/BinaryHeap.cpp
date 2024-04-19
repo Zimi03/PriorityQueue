@@ -172,7 +172,13 @@ int BinaryHeap::decreaseKey(priorityValue element, unsigned int count) {
     return modifyKey(element, element.priority - 1, count);
 }
 
-
+/**
+ * Returns size of binary heap
+ * @return int - size
+ */
+int BinaryHeap::getSize() {
+    return size;
+}
 
 void BinaryHeap::display(){
 //    std::cout << "Level: " << 0 << std::endl;
