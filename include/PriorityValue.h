@@ -4,7 +4,7 @@
 
 #ifndef PROJEKT2SD_PRIO_H
 #define PROJEKT2SD_PRIO_H
-
+#include "ostream"
 struct priorityValue{
     int priority;
     int value;

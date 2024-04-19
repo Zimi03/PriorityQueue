@@ -1,7 +1,3 @@
-//
-// Created by grzegorz on 19.04.24.
-//
-
 #include "PriorityQueueHeap.h"
 
 PriorityQueueHeap::PriorityQueueHeap() : count(0) {
