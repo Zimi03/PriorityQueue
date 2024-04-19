@@ -124,7 +124,7 @@ std::optional<priorityValueOrder> BinaryHeap::findMax() {
  * @return 1 - no such element
  */
 int BinaryHeap::remove(priorityValue element) {
-    priorityValueOrder tmp (element.priority, element.value, 0); // znacznik count nie ma wpływu na operacje ==
+    priorityValueOrder tmp (element.priority, element.value, 0); // znacznik counter nie ma wpływu na operacje ==
     int index = heap->find(tmp); // znalezienie miejsca w tablicy do usunięcia
     if(index < 0) return 1;
     else {
@@ -140,7 +140,7 @@ int BinaryHeap::remove(priorityValue element) {
 
 /**
  * Modifies key of element with given current key and value
- * It also changes count to new value
+ * It also changes counter to new value
  * @param element
  * @param priority
  * @param count
@@ -153,12 +153,12 @@ int BinaryHeap::modifyKey(priorityValue element, int priority, unsigned int coun
     if(element.priority == priority) return 1; // jeśli ten sam priorytet
     if(priority < 0) return 3;
 
-    priorityValueOrder old (element.priority, element.value, 0); // znacznik count nie ma wpływu na operacje ==
+    priorityValueOrder old (element.priority, element.value, 0); // znacznik counter nie ma wpływu na operacje ==
     int index = heap->find(old); // znalezienie miejsca w tablicy do zmiany
 
     if(index < 0) return 2;
     else {
-        priorityValueOrder curr (priority, element.value, count); // nadanie nowego priorytetu i znacznika count
+        priorityValueOrder curr (priority, element.value, count); // nadanie nowego priorytetu i znacznika counter
         heap->change(index, curr); // zaktualizowanie elementu
         if (old.priority > priority) downHeap(index, size -1, index); // naprawienie warunków kopca
         else upHeap(0, index, index); // naprawienie warunków kopca
@@ -167,7 +167,7 @@ int BinaryHeap::modifyKey(priorityValue element, int priority, unsigned int coun
 }
 /**
  * Increase key of element with given current key and value by one
- * It also changes count to new value
+ * It also changes counter to new value
  * @param element
  * @param count
  * @return 0 - success
@@ -179,7 +179,7 @@ int BinaryHeap::increaseKey(priorityValue element, unsigned int count) {
 
 /**
  * Decrease key of element with given current key and value by one
- * It also changes count to new value
+ * It also changes counter to new value
  * @param element
  * @param count
  * @return 0 - success

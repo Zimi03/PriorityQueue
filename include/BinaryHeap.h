@@ -5,7 +5,7 @@
 #ifndef PRIORITYQUEUE_BINARYHEAP_H
 #define PRIORITYQUEUE_BINARYHEAP_H
 #include "Dynamic array.h"
-//#include "PriorityValueOrder.h"
+#include "PriorityValueOrder.h"
 
 
 class BinaryHeap {

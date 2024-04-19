@@ -9,8 +9,8 @@
 
 class IPriorityQueue{
 public:
-    virtual ~IPriorityQueue() = 0;
-    virtual int insert(priorityValue element) = 0;
+    virtual ~IPriorityQueue() {};
+    virtual void insert(priorityValue element) = 0;
     virtual std::optional<priorityValue> extractMax() = 0;
     virtual std::optional<priorityValue> peek() = 0;
     virtual int modifyKey(priorityValue element, int priority) = 0;

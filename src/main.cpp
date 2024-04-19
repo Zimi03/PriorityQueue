@@ -3,6 +3,7 @@
 #include "Dynamic array.h"
 #include "List(head, tail).h"
 #include "BinaryHeap.h"
+#include "PriorityQueueHeap.h"
 
 
 using namespace std;
@@ -74,29 +75,29 @@ int main() {
 //    structure_test(&arr);
 
 
-    BinaryHeap bin;
+    PriorityQueueHeap bin;
     int count = 0;
     for(int i = 0; i < 6; i ++) {
-        bin.insert(priorityValueOrder(i, 9, count++));
-        bin.insert(priorityValueOrder(i, 10, count++));
+        bin.insert(priorityValue(i, 9));
+        bin.insert(priorityValue(i, 10));
     }
     bin.display();
-    bin.modifyKey(priorityValue(5,9), 4, count++);
-    bin.modifyKey(priorityValue(3,10), 5, count++);
-    bin.remove(priorityValue(5, 10));
-    bin.increaseKey(priorityValue(5,10), count++);
-    bin.decreaseKey(priorityValue(1,10), count++);
-    bin.decreaseKey(priorityValue(0,10), count++);
+    bin.modifyKey(priorityValue(5,9), 4);
+    bin.modifyKey(priorityValue(3,10), 5);
+//    bin.remove(priorityValue(5, 10));
+//    bin.increaseKey(priorityValue(5,10), count++);
+//    bin.decreaseKey(priorityValue(1,10), count++);
+//    bin.decreaseKey(priorityValue(0,10), count++);
 
 
 
     cout << endl << "MODIFIED" <<endl;
     bin.display();
 
-    BinaryHeap bin2(&bin);
+    PriorityQueueHeap bin2(&bin);
 
     for(int i = 0; i < 11; i ++) {
-        cout << "FIND MAX: " << bin2.findMax().value() << endl;
+        cout << "FIND MAX: " << bin2.peek().value() << endl;
         cout << "EXTRACT MAX: " << bin2.extractMax().value() << endl << endl;
         if(i == 6) bin2.display();
     }
