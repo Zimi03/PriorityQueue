@@ -1,7 +1,3 @@
-//
-// Created by Szymon on 21.03.2024.
-//
-
 #ifndef LISTY_DYNAMIC_ARRAY_H
 #define LISTY_DYNAMIC_ARRAY_H
 
@@ -13,7 +9,7 @@
 
 template <typename Data>
 class DynamicArray {
-private:
+protected:
     Data *array = nullptr;
     int size;
     int capacity;
@@ -30,7 +26,7 @@ public:
     void init(Data data) ;
 
     void insertFront(Data data) ;
-    int insert(int data, Data index) ;
+    int insert(int index, Data data) ;
     void insertBack(Data data) ;
 
     std::optional<Data>removeFront() ;
