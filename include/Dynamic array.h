@@ -18,6 +18,7 @@ public:
     explicit DynamicArray(DynamicArray *to_copy);
     int getSize() ;
     int isEmpty() ;
+    int getCapacity();
     int swap(int a, int b);
     int change(int index, Data &new_value);
 

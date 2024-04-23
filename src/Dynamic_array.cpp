@@ -249,6 +249,8 @@ void DynamicArray<Data> ::shrink() {
     delete[] array;
     array = temp;
 }
+template <typename Data>
+int DynamicArray<Data>::getCapacity() {return capacity;}
 
 template class DynamicArray<int>;
 template class DynamicArray<priorityValue>;
