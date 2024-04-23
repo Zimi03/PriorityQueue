@@ -11,7 +11,9 @@ int main(int argc, char* argv[]) {
     > tests;
 
     tests["Insert"] = [](IPriorityQueue* queue) {
-        queue->insert(PriorityValue(1, 1));
+        const int priority = Benchmark::generateNumber();
+        const int value = Benchmark::generateNumber();
+        queue->insert(PriorityValue(priority, value));
     };
 
     tests["ExtractMax"] = [](IPriorityQueue* queue) {
@@ -23,7 +25,10 @@ int main(int argc, char* argv[]) {
     };
 
     tests["ModifyKey"] = [](IPriorityQueue* queue) {
-        queue->modifyKey(PriorityValue(1, 1), 2);
+        const int priority = Benchmark::generateNumber();
+        const int newPriority = Benchmark::generateNumber();
+        const int value = Benchmark::generateNumber();
+        queue->modifyKey(PriorityValue(priority, value), newPriority);
     };
 
     for (const auto& test : tests) {

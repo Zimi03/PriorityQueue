@@ -12,9 +12,7 @@
 #include "Results.hpp"
 
 namespace Benchmark {
-    const std::vector<int> TESTING_SIZES = {128, 256, 512};
-    // const std::vector<int> TESTING_SIZES = {1024, 2048};
-    // const std::vector<int> TESTING_SIZES = {1024, 2048, 4096, 8192, 12288, 16384, 24576, 32768};
+    const std::vector<int> TESTING_SIZES = {1024, 2048, 4096, 8192, 12288, 16384, 24576, 32768};
     const int TESTING_REPETITIONS = 30;
 
     int generateNumber() {
