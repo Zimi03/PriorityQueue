@@ -48,7 +48,6 @@ public:
 
     void insert(PriorityValue element) {
         int i = findPriority(element);
-        std::cout << "Priority: " << element.priority << " Value: " << element.value << " i: " << i << std::endl;
         DynamicArray<PriorityValue>::insert(i, element);
     }
 
@@ -70,6 +69,7 @@ public:
             int j = findPriority(buf);
             DynamicArray<PriorityValue>::insert(j, buf);
         }
+        return i;
     }
 
     void display() {
