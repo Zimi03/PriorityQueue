@@ -2,27 +2,35 @@
 // Created by grzegorz on 18.04.24.
 //
 
-#ifndef PRIORITYQUEUE_PRIORITYVALUEORDER_H
-#define PRIORITYQUEUE_PRIORITYVALUEORDER_H
+#pragma once
 #include <ostream>
-struct priorityValueOrder{
+
+struct PriorityValueOrder {
     int priority;
     int value;
     unsigned int count;
 
+    PriorityValueOrder() {
+        priority = 0;
+        value = 0;
+        count = 0;
+    }
+
+    PriorityValueOrder(int priority, int value, unsigned int count): priority(priority), value(value), count(count) {}
+
     // Operator ==
-    bool operator==(const struct priorityValueOrder& other) const {
+    bool operator==(const struct PriorityValueOrder& other) const {
         return priority == other.priority && value == other.value;
     }
 
     // Operator przesunięcia bitowego w prawo (wyjście)
-    friend std::ostream& operator<<(std::ostream& os, const priorityValueOrder& p) {
+    friend std::ostream& operator<<(std::ostream& os, const PriorityValueOrder& p) {
         os << "P: " << p.priority << ", V: " << p.value << ", C: " << p.count;
         return os;
     }
 
     // Operator <
-    friend bool operator<(const priorityValueOrder& lhs, const priorityValueOrder& rhs) {
+    friend bool operator<(const PriorityValueOrder& lhs, const PriorityValueOrder& rhs) {
         // Porównujemy priorytety
         if (lhs.priority != rhs.priority) {
             return lhs.priority < rhs.priority;
@@ -31,7 +39,7 @@ struct priorityValueOrder{
         return lhs.count >= rhs.count;
     }
     // Operator <
-    friend bool operator>(const priorityValueOrder& lhs, const priorityValueOrder& rhs) {
+    friend bool operator>(const PriorityValueOrder& lhs, const PriorityValueOrder& rhs) {
         // Porównujemy priorytety
         if (lhs.priority != rhs.priority) {
             return lhs.priority > rhs.priority;
@@ -40,5 +48,3 @@ struct priorityValueOrder{
         return lhs.count <= rhs.count;
     }
 };
-
-#endif //PRIORITYQUEUE_PRIORITYVALUEORDER_H
