@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <functional>
 #include "Tools/Benchmarks.hpp"
 #include "Tools/DataExporter.hpp"
 

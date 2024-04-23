@@ -5,6 +5,8 @@
 #include <random>
 #include <algorithm>
 #include <map>
+#include <functional>
+#include <chrono>
 
 #include "../Queues/PriorityQueueHeap.hpp"
 #include "../Queues/PriorityQueueArray.hpp"
