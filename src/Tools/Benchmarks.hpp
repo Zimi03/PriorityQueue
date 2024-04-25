@@ -37,6 +37,12 @@ namespace Benchmark {
                 for (int j = 0; j < size; ++j) {
                     queue.second->insert(arr[j]);
                 }
+                IPriorityQueue* copies[TESTING_REPETITIONS];
+                if(queue.first == "PriorityQueueArray"){
+                    for (int i = 0; i < TESTING_REPETITIONS; ++i){
+                        copies[i] = new PriorityQueueArray(queue.second);
+                    }
+                }
                 for (int i = 0; i < TESTING_REPETITIONS; ++i) {
                     const auto timeStart = std::chrono::high_resolution_clock::now();
                     callback(queue.second);
