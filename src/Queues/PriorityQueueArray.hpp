@@ -7,7 +7,7 @@
 #include "IPriorityQueue.h"
 #include "../Structures/DynamicArray.hpp"
 
-class PriorityQueueArray: public IPriorityQueue, private DynamicArray<PriorityValue>{
+class PriorityQueueArray: public IPriorityQueue, private DynamicArray<PriorityValue> {
 private:
     int findPriority(PriorityValue element) {
         int temp = element.priority;

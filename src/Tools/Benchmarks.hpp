@@ -34,18 +34,28 @@ namespace Benchmark {
         for (const auto& queue : queues) {
             for (const auto& size : TESTING_SIZES) {
                 Results result(queue.first, size);
+                IPriorityQueue* copies[TESTING_REPETITIONS];
+
                 for (int j = 0; j < size; ++j) {
                     queue.second->insert(arr[j]);
                 }
-                IPriorityQueue* copies[TESTING_REPETITIONS];
-                if(queue.first == "PriorityQueueArray"){
+
+                if (queue.first == "PriorityQueueArray"){
                     for (int i = 0; i < TESTING_REPETITIONS; ++i){
-                        copies[i] = new PriorityQueueArray(queue.second);
+                        copies[i] = new PriorityQueueArray(dynamic_cast<PriorityQueueArray*>(queue.second));
                     }
+                } else if (queue.first == "PriorityQueueHeap") {
+                    for (int i = 0; i < TESTING_REPETITIONS; ++i){
+                        copies[i] = new PriorityQueueHeap(dynamic_cast<PriorityQueueHeap*>(queue.second));
+                    }
+                } else {
+                    std::cerr << "Unknown queue type: " << queue.first << std::endl;
+                    exit(1);
                 }
+
                 for (int i = 0; i < TESTING_REPETITIONS; ++i) {
                     const auto timeStart = std::chrono::high_resolution_clock::now();
-                    callback(queue.second);
+                    callback(copies[i]);
                     const auto timeEnd = std::chrono::high_resolution_clock::now();
                     const auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(timeEnd - timeStart);
                     result.push(duration.count());
