@@ -20,11 +20,11 @@ namespace Benchmark {
     int generateNumber() {
         std::random_device rd;
         std::mt19937 gen(std::random_device{}());
-        std::uniform_int_distribution<int> dist(0, 100000);
+        std::uniform_int_distribution<int> dist(0, 327680);
         return dist(gen);
     }
 
-    std::vector<Results> run(std::function<void(IPriorityQueue* queue)> callback) {
+    std::vector<Results> run(std::function<void(IPriorityQueue* queue)> callback, PriorityValue* arr) {
         std::map<std::string, IPriorityQueue*> queues;
         std::vector<Results> benchmarks;
 
@@ -35,9 +35,7 @@ namespace Benchmark {
             for (const auto& size : TESTING_SIZES) {
                 Results result(queue.first, size);
                 for (int j = 0; j < size; ++j) {
-                    const int priority = generateNumber();
-                    const int value = generateNumber();
-                    queue.second->insert(PriorityValue(priority, value));
+                    queue.second->insert(arr[j]);
                 }
                 for (int i = 0; i < TESTING_REPETITIONS; ++i) {
                     const auto timeStart = std::chrono::high_resolution_clock::now();

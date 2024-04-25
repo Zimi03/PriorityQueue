@@ -6,6 +6,7 @@
 #include "Tools/DataExporter.hpp"
 
 int main(int argc, char* argv[]) {
+    int max_size = 32768;
     std::map<
         std::string,
         std::function<void(IPriorityQueue* queue)>
@@ -32,9 +33,15 @@ int main(int argc, char* argv[]) {
         queue->modifyKey(PriorityValue(priority, value), newPriority);
     };
 
+    PriorityValue arr[max_size];
+    for(int i = 0; i <max_size; ++i){
+        arr[i].priority = Benchmark::generateNumber();
+        arr[i].value = Benchmark::generateNumber();
+    }
+
     for (const auto& test : tests) {
         std::cout << "Method: " << test.first << std::endl;
-        std::vector<Results> results = Benchmark::run(test.second);
+        std::vector<Results> results = Benchmark::run(test.second, arr);
 
         for (auto& benchmark : results) {
             float average = benchmark.average();
