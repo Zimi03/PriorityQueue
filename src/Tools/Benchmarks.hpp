@@ -14,12 +14,13 @@
 
 namespace Benchmark {
     const std::vector<int> TESTING_SIZES = {1024, 2048, 4096, 8192, 12288, 16384, 24576, 32768};
-    const int TESTING_REPETITIONS = 1000;
+//    const int TESTING_REPETITIONS = 1000;
 
     std::vector<Results> run(
             std::function<void(IPriorityQueue* queue, TestingValue testingData)> callback, // funkcja testująca
             std::map<int,PriorityValue*> &initzialData, // tablica danych inicjalizujących struktury
-            std::map<int, TestingValue*> &testingData // tablica danych testujących
+            std::map<int, TestingValue*> &testingData, // tablica danych testujących
+            const int TESTING_REPETITIONS = 1000
     ) {
         std::vector<Results> benchmarks; // vektor wyników
 

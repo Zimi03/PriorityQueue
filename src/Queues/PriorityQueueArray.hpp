@@ -46,21 +46,49 @@ public:
         }
     }
 
+    /**
+     * Inserts element in proper place in queue
+     * @param element
+     */
     void insert(PriorityValue element) {
         int i = findPriority(element);
         DynamicArray<PriorityValue>::insert(i, element);
     }
 
+    /**
+     * Deletes and returns element with highest priority
+     * @return extracted element if exists
+     * @return std::nullopt if element does not exist
+    */
     std::optional<PriorityValue> extractMax() {
         return DynamicArray<PriorityValue>::removeBack();
     }
 
+    /**
+     * Returns element with biggest priority
+     * @return returns element if exists
+     * @return std::nullopt if element does not exist
+     */
     std::optional<PriorityValue> peek() {
+        if(size == 0) return std::nullopt;
         return array[size - 1];
     }
 
+    /**
+     * Modifies key of element with given current key and value
+     * It also changes counter to new value
+     * @param element
+     * @param priority
+     * @param count
+     * @return 0 - success
+     * @return 1 - the same priority
+     * @return 2 - no such element
+     * @return 3 - priority less than zero
+    */
     int modifyKey(PriorityValue element, int priority) {
         int i = findValue(element);
+        if (priority < 0) return 3;
+        if (element.priority == priority) return 1;
         if (i != -1){
             remove(i);
             PriorityValue buf;
@@ -68,13 +96,16 @@ public:
             buf.priority = priority;
             int j = findPriority(buf);
             DynamicArray<PriorityValue>::insert(j, buf);
-        }
-        return i;
+            return 0;
+        } else return 2;
     }
-
+    /**
+     * Displays data in queue
+     */
     void display() {
         for(int i = 0; i < size; i++) {
-            std::cout << "Value: " << array[i].value << " Priority: " << array[i].priority << std::endl;
+//            std::cout << "Value: " << array[i].value << " Priority: " << array[i].priority << std::endl;
+            std::cout << i << ". " << array[i] << std::endl;
         }
     }
 };

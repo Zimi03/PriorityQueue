@@ -26,7 +26,10 @@ public:
     ~PriorityQueueHeap() {
         delete heap;
     }
-
+    /**
+     * Inserts element in proper place in queue
+     * @param element
+     */
     void insert(PriorityValue element) {
         heap->insert(PriorityValueOrder(element.priority, element.value, counter++));
     }
@@ -74,6 +77,9 @@ public:
         return heap->modifyKey(element, priority, counter++);
     }
 
+    /**
+    * Displays data in queue
+    */
     void display() {
         heap->display();
     }
