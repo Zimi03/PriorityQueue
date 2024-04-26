@@ -32,19 +32,71 @@ int main(int argc, char* argv[]) {
         queue->modifyKey(testingData, testingData.newPriority);
     };
 
-    const int maxSize = Benchmark::TESTING_SIZES.back(); // rozmiar największej struktury
+    // Mapa rozmiar struktury -> tablica danych inicjalizujących
+    std::map<
+            int, // rozmiar
+            PriorityValue* // tablica danych
+    > initzialData;
 
-    PriorityValue fillData[maxSize]; // tablica danych inicjalizujących
-    for (int i = 0; i < maxSize; ++i){ // uzupełnia tablice danych inicjalizujących - losuje dane
-        fillData[i].priority = Utils::generateNumber();
-        fillData[i].value = Utils::generateNumber();
+    // Losowanie danych inicjalizujących dla każdego rozmiaru
+    std::cout << "Randoming initzialization data..." << std::endl;
+    for(const auto& data : Benchmark::TESTING_SIZES){ // uzupełnia tablice danych inicjalizujących
+        initzialData[data] = new PriorityValue[data]; // alokowanie odpowiedniego rozmiaru tablicy
+        for(int i = 0; i < data; i++){
+            initzialData[data][i] = TestingValue(data);
+//
+//            initzialData[data][i].value = Utils::generateNumber(data);
+//            initzialData[data][i].priority = Utils::generateNumber(data*3);
+        }
     }
 
-    TestingValue testingData[Benchmark::TESTING_REPETITIONS]; // losuje dane testujące
 
+
+    /*NIE*/    TestingValue testingData[Benchmark::TESTING_REPETITIONS]{}; // losuje dane testujące ---- NIE
+    // Mapa rozmiar struktury -> tablica danych testujących funkcje insert
+    std::map<
+            int, // rozmiar
+            TestingValue* // tablica danych
+    > testingDataInsert;
+
+    // Losowanie danych testowych funkcji insert dla każdego rozmiaru
+    std::cout << "Randoming testing data..." << std::endl;
+    for(const auto& data : Benchmark::TESTING_SIZES){ // uzupełnia tablice danych testujących - dla INSERT
+        testingDataInsert[data] = new TestingValue[data]; // alokowanie odpowiedniego rozmiaru tablicy
+        for(int i = 0; i < data; i++){
+            testingDataInsert[data][i] = TestingValue(data);
+        }
+    }
+
+    // Mapa rozmiar struktury -> tablica danych testujących funkcje modify
+    std::map<
+            int, // rozmiar
+            TestingValue* // tablica danych
+    > testingDataModify;
+
+    // Losowanie danych testowych funkcji modify dla każdego rozmiaru
+    for(const auto& data : Benchmark::TESTING_SIZES){ // uzupełnia tablice danych testujących - dla INSERT
+        testingDataModify[data] = new TestingValue[data]; // alokowanie odpowiedniego rozmiaru tablicy
+        for(int i = 0; i < data; i++){
+            testingDataModify[data][i] = TestingValue(initzialData[data],data);
+        }
+    }
+
+    std::cout << "Randoming data finished." << std::endl << std::endl;
+
+    std::cout << "Testing data..." << std::endl << std::endl;
+
+
+    DataExporter exporter; // inicjalizuje exporter danych do csv poprzez nazwe testu i wyniki testów
+    std::string folderPath = exporter.createNewFolder();
     for (const auto& test : tests) { // dla wszystkich testów
-        std::cout << "Method: " << test.first << std::endl;
-        std::vector<Results> results = Benchmark::run(test.second, fillData, testingData); // funkcja testująca
+        std::vector<Results> results; // vektor rezultatów
+        std::cout << "Method: " << test.first << "..." << std::endl;
+        if (test.first == "ModifyKey"){
+            results = Benchmark::run(test.second, initzialData, testingDataModify); // funkcja testująca
+        } else {
+            results = Benchmark::run(test.second, initzialData, testingDataInsert); // funkcja testująca
+        }
 
         for (auto& benchmark : results) { // dla rezultatów
             float average = benchmark.average(); // pobiera średnią z pomiarów
@@ -54,8 +106,8 @@ int main(int argc, char* argv[]) {
             std::cout << std::endl;
         }
 
-        DataExporter exporter(test.first, results); // inicjalizuje exporter danych do csv poprzez nazwe testu i wyniki testów
-        exporter.generate(); // zapisuje dane
+        exporter = DataExporter(test.first, results); // inicjalizuje exporter danych do csv poprzez nazwe testu i wyniki testów
+        exporter.generate(folderPath); // zapisuje dane
 
         std::cout << std::endl;
     }

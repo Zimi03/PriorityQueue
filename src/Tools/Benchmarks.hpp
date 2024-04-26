@@ -10,15 +10,16 @@
 #include "../Structures/PriorityValue.hpp"
 #include "../Structures/TestingValue.hpp"
 #include "Results.hpp"
+#include "Utils.hpp"
 
 namespace Benchmark {
     const std::vector<int> TESTING_SIZES = {1024, 2048, 4096, 8192, 12288, 16384, 24576, 32768};
-    const int TESTING_REPETITIONS = 30;
+    const int TESTING_REPETITIONS = 1000;
 
     std::vector<Results> run(
-        std::function<void(IPriorityQueue* queue, TestingValue testingData)> callback, // funkcja testująca
-        PriorityValue* fillData, // tablica danych inicjalizujących struktury
-        TestingValue* testingData // tablica danych testujących
+            std::function<void(IPriorityQueue* queue, TestingValue testingData)> callback, // funkcja testująca
+            std::map<int,PriorityValue*> &initzialData, // tablica danych inicjalizujących struktury
+            std::map<int, TestingValue*> &testingData // tablica danych testujących
     ) {
         std::vector<Results> benchmarks; // vektor wyników
 
@@ -32,7 +33,7 @@ namespace Benchmark {
                 IPriorityQueue* copies[TESTING_REPETITIONS]; // pusta tablica kopi struktur
 
                 for (int j = 0; j < size; ++j) { // uzupełnienie inicjalizującej struktury
-                    queue.second->insert(fillData[j]);
+                    queue.second->insert(initzialData[size][j]);
                 }
 
                 if (queue.first == "PriorityQueueArray"){ // dla kolejki na tablicy
@@ -50,12 +51,16 @@ namespace Benchmark {
 
                 for (int i = 0; i < TESTING_REPETITIONS; ++i) { // testy
                     const auto timeStart = std::chrono::high_resolution_clock::now();
-                    callback(copies[i], testingData[i]);
+                    callback(copies[i], testingData[size][i]);
                     const auto timeEnd = std::chrono::high_resolution_clock::now();
                     const auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(timeEnd - timeStart);
                     result.push(duration.count()); // dodaj wynik do obiektu przechowującego wyniki
                 }
                 benchmarks.push_back(result); // dodaj obiekt przechowujący wyniki do vektora takich obiektów
+
+                for(int i = 0; i < TESTING_REPETITIONS; i ++){
+                    delete copies[i];
+                }
             }
         }
 

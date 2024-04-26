@@ -7,11 +7,20 @@
  * Struktura przechowująca dane testowe
  */
 struct TestingValue : public PriorityValue {
-    int newPriority;
+    int newPriority = 0;
 
-    TestingValue() {
-        priority = Utils::generateNumber();
-        value = Utils::generateNumber();
-        newPriority = Utils::generateNumber();
+    TestingValue(int size) {
+        priority = Utils::generateNumber(size*6);
+        value = Utils::generateNumber(size);
+    }
+
+    TestingValue() : PriorityValue(){
+    }
+
+    TestingValue(PriorityValue* &data, int size){
+        int index = Utils::generateNumber(size);
+        priority = data[index].priority;
+        value = data[index].value;
+        newPriority = Utils::generateNumber(size*6);
     }
 };

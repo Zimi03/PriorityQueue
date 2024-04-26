@@ -6,6 +6,7 @@
 #include <ostream>
 
 struct PriorityValue {
+public:
     int priority;
     int value;
 

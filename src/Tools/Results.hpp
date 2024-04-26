@@ -14,6 +14,7 @@ class Results
         std::vector<int> durations; // wektor pomiarów
         int stack; // rozmiar struktury testowanej
 
+
         Results(
             std::string className,
             int stack
@@ -35,5 +36,9 @@ class Results
             if (durations.empty()) return 0;
             auto const count = durations.size();
             return std::reduce(durations.begin(), durations.end()) / count; // suma czasów przez liczbę pomiarów
+        }
+
+        int testsNumber(){
+            return int(durations.size());
         }
 };
