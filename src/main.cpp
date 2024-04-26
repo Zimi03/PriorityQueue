@@ -3,45 +3,42 @@
 #include <map>
 #include <functional>
 #include "Tools/Benchmarks.hpp"
+#include "Tools/Utils.hpp"
 #include "Tools/DataExporter.hpp"
 
 int main(int argc, char* argv[]) {
-    int max_size = 32768;
     std::map<
         std::string,
-        std::function<void(IPriorityQueue* queue)>
+        std::function<void(IPriorityQueue* queue, TestingValue testingData)>
     > tests;
 
-    tests["Insert"] = [](IPriorityQueue* queue) {
-        const int priority = Benchmark::generateNumber();
-        const int value = Benchmark::generateNumber();
-        queue->insert(PriorityValue(priority, value));
+    tests["Insert"] = [](IPriorityQueue* queue, TestingValue testingData) {
+        queue->insert(testingData);
     };
 
-    tests["ExtractMax"] = [](IPriorityQueue* queue) {
+    tests["ExtractMax"] = [](IPriorityQueue* queue, TestingValue testingData) {
         queue->extractMax();
     };
 
-    tests["Peek"] = [](IPriorityQueue* queue) {
+    tests["Peek"] = [](IPriorityQueue* queue, TestingValue testingData) {
         queue->peek();
     };
 
-    tests["ModifyKey"] = [](IPriorityQueue* queue) {
-        const int priority = Benchmark::generateNumber();
-        const int newPriority = Benchmark::generateNumber();
-        const int value = Benchmark::generateNumber();
-        queue->modifyKey(PriorityValue(priority, value), newPriority);
+    tests["ModifyKey"] = [](IPriorityQueue* queue, TestingValue testingData) {
+        queue->modifyKey(testingData, testingData.newPriority);
     };
 
-    PriorityValue arr[max_size];
-    for(int i = 0; i <max_size; ++i){
-        arr[i].priority = Benchmark::generateNumber();
-        arr[i].value = Benchmark::generateNumber();
+    const int maxSize = Benchmark::TESTING_SIZES.back();
+    PriorityValue fillData[maxSize];
+    for (int i = 0; i < maxSize; ++i){
+        fillData[i].priority = Utils::generateNumber();
+        fillData[i].value = Utils::generateNumber();
     }
+    TestingValue testingData[Benchmark::TESTING_REPETITIONS];
 
     for (const auto& test : tests) {
         std::cout << "Method: " << test.first << std::endl;
-        std::vector<Results> results = Benchmark::run(test.second, arr);
+        std::vector<Results> results = Benchmark::run(test.second, fillData, testingData);
 
         for (auto& benchmark : results) {
             float average = benchmark.average();
