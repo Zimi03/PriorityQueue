@@ -16,49 +16,49 @@ namespace Benchmark {
     const int TESTING_REPETITIONS = 30;
 
     std::vector<Results> run(
-        std::function<void(IPriorityQueue* queue, TestingValue testingData)> callback,
-        PriorityValue* fillData,
-        TestingValue* testingData
+        std::function<void(IPriorityQueue* queue, TestingValue testingData)> callback, // funkcja testująca
+        PriorityValue* fillData, // tablica danych inicjalizujących struktury
+        TestingValue* testingData // tablica danych testujących
     ) {
-        std::vector<Results> benchmarks;
+        std::vector<Results> benchmarks; // vektor wyników
 
-        std::map<std::string, IPriorityQueue*> queues;
+        std::map<std::string, IPriorityQueue*> queues; // mapa: nazwa struktury - struktura
         queues["PriorityQueueArray"] = new PriorityQueueArray();
         queues["PriorityQueueHeap"] = new PriorityQueueHeap();
 
-        for (const auto& queue : queues) {
-            for (const auto& size : TESTING_SIZES) {
-                Results result(queue.first, size);
-                IPriorityQueue* copies[TESTING_REPETITIONS];
+        for (const auto& queue : queues) { // dla obu struktur
+            for (const auto& size : TESTING_SIZES) { // dla wszystkich rozmiarów
+                Results result(queue.first, size); // inicjalizaja obiektu przechowującego wyniki
+                IPriorityQueue* copies[TESTING_REPETITIONS]; // pusta tablica kopi struktur
 
-                for (int j = 0; j < size; ++j) {
+                for (int j = 0; j < size; ++j) { // uzupełnienie inicjalizującej struktury
                     queue.second->insert(fillData[j]);
                 }
 
-                if (queue.first == "PriorityQueueArray"){
-                    for (int i = 0; i < TESTING_REPETITIONS; ++i){
+                if (queue.first == "PriorityQueueArray"){ // dla kolejki na tablicy
+                    for (int i = 0; i < TESTING_REPETITIONS; ++i){ // stworzenie kopii struktur
                         copies[i] = new PriorityQueueArray(dynamic_cast<PriorityQueueArray*>(queue.second));
                     }
-                } else if (queue.first == "PriorityQueueHeap") {
-                    for (int i = 0; i < TESTING_REPETITIONS; ++i){
+                } else if (queue.first == "PriorityQueueHeap") { // dla kolejki na kopcu
+                    for (int i = 0; i < TESTING_REPETITIONS; ++i){ // stowrzenie kopii struktur
                         copies[i] = new PriorityQueueHeap(dynamic_cast<PriorityQueueHeap*>(queue.second));
                     }
-                } else {
+                } else { // nieznany typ kolejki - exit
                     std::cerr << "Unknown queue type: " << queue.first << std::endl;
                     exit(1);
                 }
 
-                for (int i = 0; i < TESTING_REPETITIONS; ++i) {
+                for (int i = 0; i < TESTING_REPETITIONS; ++i) { // testy
                     const auto timeStart = std::chrono::high_resolution_clock::now();
                     callback(copies[i], testingData[i]);
                     const auto timeEnd = std::chrono::high_resolution_clock::now();
                     const auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(timeEnd - timeStart);
-                    result.push(duration.count());
+                    result.push(duration.count()); // dodaj wynik do obiektu przechowującego wyniki
                 }
-                benchmarks.push_back(result);
+                benchmarks.push_back(result); // dodaj obiekt przechowujący wyniki do vektora takich obiektów
             }
         }
 
-        return benchmarks;
+        return benchmarks; // zwraca wektor wyników
     }
 }

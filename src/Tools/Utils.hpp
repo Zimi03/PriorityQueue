@@ -5,6 +5,10 @@
 #include <chrono>
 
 namespace Utils {
+    /**
+     * Generuje liczby z zakresu
+     * @return
+     */
     int generateNumber() {
         std::random_device rd;
         std::mt19937 gen(std::random_device{}());

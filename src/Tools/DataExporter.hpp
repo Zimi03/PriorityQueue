@@ -7,6 +7,10 @@
 #include <map>
 #include "Results.hpp"
 
+/**
+ * Obiekt przechowujący dane do zapisu do pliku
+ * Ma metodę zapisującą dane do pliku
+ */
 class DataExporter {
     std::string name;
     std::vector<Results> results;
@@ -17,6 +21,9 @@ class DataExporter {
             const std::vector<Results>& _results
         ) :  name(_name), results(_results) {}
 
+        /**
+         * Zapis danych pomiarowych do pliku csv
+         */
         void generate() {
             std::fstream fs(filename(), std::ios::out);
 

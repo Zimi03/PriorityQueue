@@ -3,6 +3,9 @@
 #include "PriorityValue.hpp"
 #include "../Tools/Utils.hpp"
 
+/**
+ * Struktura przechowująca dane testowe
+ */
 struct TestingValue : public PriorityValue {
     int newPriority;
 
