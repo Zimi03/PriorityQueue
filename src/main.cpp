@@ -49,11 +49,12 @@ void menuSecondLevel(unsigned int firstLevelChoice, unsigned int &second, int si
 
     std::cout << "\n\nMENU - " << structure << " - " << size << std::endl;
     std::cout << "0. Back to main menu." << std::endl;
-    std::cout << "1. test insert" << std::endl;
-    std::cout << "2. test extractMax" << std::endl;
-    std::cout << "3. test peek" << std::endl;
-    std::cout << "4. test modifyKey" << std::endl;
-    std::cout << "5. display" << std::endl;
+    std::cout << "1. insert" << std::endl;
+    std::cout << "2. extractMax" << std::endl;
+    std::cout << "3. peek" << std::endl;
+    std::cout << "4. modifyKey" << std::endl;
+    std::cout << "5. return size" << std::endl;
+    std::cout << "6. display" << std::endl;
 
     std::cout << "Choose task: ";
     second = typeNumber<unsigned int>();
@@ -83,6 +84,11 @@ void autotest(int repetitions){
     // Funkcja testowa MODIFY KEY
     tests["ModifyKey"] = [](IPriorityQueue *queue, TestingValue testingData) {
         queue->modifyKey(testingData, testingData.newPriority);
+    };
+
+    // Funkcja testowa RETRUN SIZE
+    tests["ReturnSize"] = [](IPriorityQueue *queue, TestingValue testingData) {
+        queue->getSize();
     };
 
     // Mapa rozmiar struktury -> tablica danych inicjalizujących
@@ -230,6 +236,10 @@ int main(int argc, char* argv[]) {
                             else if (value == 3) std::cout << "New priority less than zero" << std::endl;
                             break;
                         case 5: // display
+                            std::cout << "RerurnSize" << std::endl;
+                            std::cout << "Size: " << pqHeap->getSize() << std::endl;
+                            break;
+                        case 6: // display
                             pqHeap->display();
                             break;
                         default:
@@ -290,6 +300,10 @@ int main(int argc, char* argv[]) {
                             else if (value == 3) std::cout << "New priority less than zero" << std::endl;
                             break;
                         case 5: // display
+                            std::cout << "RerurnSize" << std::endl;
+                            std::cout << "Size: " << pqArray->getSize() << std::endl;
+                            break;
+                        case 6: // display
                             pqArray->display();
                             break;
                         default:

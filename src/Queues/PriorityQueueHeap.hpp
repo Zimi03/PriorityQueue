@@ -18,20 +18,21 @@ public:
         size = heap->getSize();
     }
 
-    PriorityQueueHeap(PriorityQueueHeap *to_copy) : counter(0) {
+    explicit PriorityQueueHeap(PriorityQueueHeap *to_copy) : counter(0) {
         heap = new BinaryHeap(to_copy->heap);
         size = heap->getSize();
     }
 
-    ~PriorityQueueHeap() {
+    ~PriorityQueueHeap() override{
         delete heap;
     }
     /**
      * Inserts element in proper place in queue
      * @param element
      */
-    void insert(PriorityValue element) {
+    void insert(PriorityValue element) override{
         heap->insert(PriorityValueOrder(element.priority, element.value, counter++));
+        size = heap->getSize();
     }
 
     /**
@@ -39,11 +40,12 @@ public:
      * @return extracted element if exists
      * @return std::nullopt if element does not exist
      */
-    std::optional<PriorityValue> extractMax() {
+    std::optional<PriorityValue> extractMax() override{
         std::optional<PriorityValueOrder> tmp = heap->extractMax();
         if(tmp == std::nullopt) return std::nullopt;
         else {
             PriorityValue extracted (tmp.value().priority, tmp.value().value);
+            size = heap->getSize();
             return extracted;
         }
     }
@@ -53,7 +55,7 @@ public:
      * @return returns element if exists
      * @return std::nullopt if element does not exist
      */
-    std::optional<PriorityValue> peek() {
+    std::optional<PriorityValue> peek() override{
         std::optional<PriorityValueOrder> tmp = heap->findMax();
         if(tmp == std::nullopt) return std::nullopt;
         else {
@@ -73,8 +75,16 @@ public:
      * @return 2 - no such element
      * @return 3 - priority less than zero
      */
-    int modifyKey(PriorityValue element, int priority) {
+    int modifyKey(PriorityValue element, int priority) override{
         return heap->modifyKey(element, priority, counter++);
+    }
+
+    /**
+     * Returns number of elements in priority queue
+     * @return int - size
+     */
+    int getSize() override{
+        return size;
     }
 
     /**

@@ -39,4 +39,9 @@ public:
      * @return 3 - priority less than zero
     */
     virtual int modifyKey(PriorityValue element, int priority) = 0;
+    /**
+     * Returns number of elements in priority queue
+     * @return int - size
+     */
+    virtual int getSize() = 0;
 };

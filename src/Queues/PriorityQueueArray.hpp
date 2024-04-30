@@ -50,7 +50,7 @@ public:
      * Inserts element in proper place in queue
      * @param element
      */
-    void insert(PriorityValue element) {
+    void insert(PriorityValue element) override{
         int i = findPriority(element);
         DynamicArray<PriorityValue>::insert(i, element);
     }
@@ -60,7 +60,7 @@ public:
      * @return extracted element if exists
      * @return std::nullopt if element does not exist
     */
-    std::optional<PriorityValue> extractMax() {
+    std::optional<PriorityValue> extractMax() override{
         return DynamicArray<PriorityValue>::removeBack();
     }
 
@@ -69,7 +69,7 @@ public:
      * @return returns element if exists
      * @return std::nullopt if element does not exist
      */
-    std::optional<PriorityValue> peek() {
+    std::optional<PriorityValue> peek() override{
         if(size == 0) return std::nullopt;
         return array[size - 1];
     }
@@ -85,7 +85,7 @@ public:
      * @return 2 - no such element
      * @return 3 - priority less than zero
     */
-    int modifyKey(PriorityValue element, int priority) {
+    int modifyKey(PriorityValue element, int priority) override{
         int i = findValue(element);
         if (priority < 0) return 3;
         if (element.priority == priority) return 1;
@@ -99,6 +99,15 @@ public:
             return 0;
         } else return 2;
     }
+
+    /**
+     * Returns number of elements in priority queue
+     * @return int - size
+     */
+    int getSize() override{
+        return size;
+    }
+
     /**
      * Displays data in queue
      */

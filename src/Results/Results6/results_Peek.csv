@@ -1,0 +1,17 @@
+className;stack;average;repetitions
+PriorityQueueArray;1024;251;1000
+PriorityQueueArray;2048;246;1000
+PriorityQueueArray;4096;287;1000
+PriorityQueueArray;8192;324;1000
+PriorityQueueArray;12288;355;1000
+PriorityQueueArray;16384;359;1000
+PriorityQueueArray;24576;334;1000
+PriorityQueueArray;32768;347;1000
+PriorityQueueHeap;1024;320;1000
+PriorityQueueHeap;2048;350;1000
+PriorityQueueHeap;4096;399;1000
+PriorityQueueHeap;8192;430;1000
+PriorityQueueHeap;12288;405;1000
+PriorityQueueHeap;16384;429;1000
+PriorityQueueHeap;24576;408;1000
+PriorityQueueHeap;32768;418;1000

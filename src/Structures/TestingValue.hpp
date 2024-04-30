@@ -10,7 +10,7 @@ struct TestingValue : public PriorityValue {
     int newPriority = 0;
 
     TestingValue(int size) {
-        priority = Utils::generateNumber(size*6);
+        priority = Utils::generateNumber(size*3);
         value = Utils::generateNumber(size);
     }
 
@@ -21,6 +21,6 @@ struct TestingValue : public PriorityValue {
         int index = Utils::generateNumber(size);
         priority = data[index].priority;
         value = data[index].value;
-        newPriority = Utils::generateNumber(size*6);
+        newPriority = Utils::generateNumber(size*3);
     }
 };
