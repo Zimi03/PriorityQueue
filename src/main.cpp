@@ -6,6 +6,8 @@
 #include "Tools/Utils.hpp"
 #include "Tools/DataExporter.hpp"
 
+#include "Queues/PriorityQueueHeapMap.hpp"
+
 void clearInputStream() {
     std::cin.clear(); // Czyszczenie flag błędów
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignorowanie wszystkich pozostałych znaków w buforze
@@ -33,7 +35,8 @@ void menu(unsigned int &first)
     std::cout << "0. EXIT." << std::endl;
     std::cout << "1. PriorityQueue - heap" << std::endl;
     std::cout << "2. PriorityQueue - dynamic array" << std::endl;
-    std::cout << "3. Auto-test" << std::endl;
+    std::cout << "3. PriorityQueue - heap with map_index" << std::endl;
+    std::cout << "4. Auto-test" << std::endl;
 
 
     std::cout << "Choose task: ";
@@ -45,7 +48,8 @@ void menuSecondLevel(unsigned int firstLevelChoice, unsigned int &second, int si
     std::string structure = " ";
     if(firstLevelChoice == 1) structure = "PriorityQueue - heap";
     else if(firstLevelChoice == 2)  structure = "PriorityQueue - dynamic array";
-    else if(firstLevelChoice == 3)  structure = "Auto-test";
+    else if(firstLevelChoice == 3)  structure = "PriorityQueue - heap with map_index";
+    else if(firstLevelChoice == 4)  structure = "Auto-test";
 
     std::cout << "\n\nMENU - " << structure << " - " << size << std::endl;
     std::cout << "0. Back to main menu." << std::endl;
@@ -176,6 +180,8 @@ int main(int argc, char* argv[]) {
 
     PriorityQueueHeap* pqHeap = nullptr;
     PriorityQueueArray* pqArray = nullptr;
+    PriroityQueueHeapMap* pqHeapMap = nullptr;
+
 
     do {
         menu(firstChocie);
@@ -312,8 +318,72 @@ int main(int argc, char* argv[]) {
                     }
                 } while (secondChoice != 0);
                 break;
+            case 3: // PriorityQueue - heap with map_index
+                std::cout << "Structure size: " ;
+                size = typeNumber<int>();
+
+                pqHeapMap = new PriroityQueueHeapMap;
+                for(int i = 0; i < size; i++){
+                    pqHeapMap->insert(PriorityValue(Utils::generateNumber(size*5),Utils::generateNumber(size)));
+                }
+                do {
+                    menuSecondLevel(firstChocie, secondChoice, size);
+                    switch (secondChoice) {
+                        case 0:
+                            std::cout << "Quiting from PriorityQueue - heap with map_index" << std::endl;
+                            delete pqHeapMap;
+                            break;
+                        case 1: // insert
+                            std::cout << "Insert" << std::endl;
+                            std::cout << "Priority: " ;
+                            priority = typeNumber<int>();
+                            std::cout << "Value: " ;
+                            value = typeNumber<int>();
+                            pqHeapMap->insert(PriorityValue(priority,value));
+                            break;
+                        case 2: // extractMax
+                            std::cout << "ExtractMax" << std::endl;
+                            opt_val = pqHeapMap->extractMax();
+                            if(opt_val != std::nullopt){
+                                std::cout << "Extracted value: " << opt_val.value() << std::endl;
+                            } else std::cout << "Empty structure" << std::endl;
+                            break;
+                        case 3: // peek
+                            std::cout << "Peek" << std::endl;
+                            opt_val = pqHeapMap->peek();
+                            if(opt_val != std::nullopt){
+                                std::cout << "Peeked value: " << opt_val.value() << std::endl;
+                            } else std::cout << "Empty structure" << std::endl;
+                            break;
+                        case 4: // modifyKey
+                            std::cout << "ModifyKey" << std::endl;
+                            std::cout << "Old priority: " ;
+                            priority = typeNumber<int>();
+                            std::cout << "Value: " ;
+                            value = typeNumber<int>();
+                            std::cout << "New priority: " ;
+                            new_priority = typeNumber<int>();
+                            value = pqHeapMap->modifyKey(PriorityValue(priority,value), new_priority);
+                            if(value == 0) std::cout << "Success" << std::endl;
+                            else if (value == 1) std::cout << "The same priority" << std::endl;
+                            else if (value == 2) std::cout << "No such element" << std::endl;
+                            else if (value == 3) std::cout << "New priority less than zero" << std::endl;
+                            break;
+                        case 5: // display
+                            std::cout << "RerurnSize" << std::endl;
+                            std::cout << "Size: " << pqHeapMap->getSize() << std::endl;
+                            break;
+                        case 6: // display
+                            pqHeapMap->display();
+                            break;
+                        default:
+                            std::cout << "Wrong choice. Try again." << std::endl;
+                            break;
+                    }
+                } while (secondChoice != 0);
+                break;
                 /*  AUTO TEST   */
-            case 3:
+            case 4:
                 std::cout << std::endl << "AUTO-TEST" << std::endl;
                 std::cout << "Repetitions: " ;
                 size = typeNumber<int>();

@@ -47,4 +47,16 @@ struct PriorityValueOrder {
         // Jeśli priorytety są równe, porównujemy wartości
         return lhs.count <= rhs.count;
     }
+
+    // Operator %
+    friend int operator%(const PriorityValueOrder& pvo, int mod) {
+//        return (pvo.priority) % mod + (pvo.value % mod);
+        return (pvo.priority + pvo.value) % mod;
+    }
+
+    // Operator /
+    friend int operator/(const PriorityValueOrder& pvo, int div) {
+//        return int((pvo.priority / div) * (pvo.value / div));
+        return int((pvo.priority + pvo.value / div));
+    }
 };

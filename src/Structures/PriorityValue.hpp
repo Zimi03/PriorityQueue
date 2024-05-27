@@ -26,4 +26,17 @@ public:
         os << "P: " << p.priority << ", V: " << p.value;
         return os;
     }
+
+    // Operator %
+    friend int operator%(const PriorityValue pvo, int mod) {
+//        return (pvo.priority) % mod + (pvo.value % mod);
+        return int(pvo.priority + pvo.value) % mod;
+    }
+
+    // Operator /
+    friend int operator/(const PriorityValue pvo, int div) {
+//        return int((pvo.priority / div) * (pvo.value / div));
+        return int((pvo.priority + pvo.value / div));
+    }
+
 };

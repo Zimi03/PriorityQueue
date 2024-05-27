@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(app_libs INTERFACE)
 target_include_directories(app_libs INTERFACE libs/)
 
-add_executable(app "src/main.cpp")
+add_executable(app "src/main.cpp"
+        src/Structures/PriorityValueOrderMap.hpp)
 target_link_libraries(app app_libs)
-target_include_directories(app INTERFACE src/Structures src/Queues src/Tools)
+target_include_directories(app INTERFACE src/Structures src/Queues src/Tools src/Lists)

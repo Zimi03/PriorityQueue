@@ -7,6 +7,7 @@
 
 #include "../Queues/PriorityQueueHeap.hpp"
 #include "../Queues/PriorityQueueArray.hpp"
+#include "../Queues/PriorityQueueHeapMap.hpp"
 #include "../Structures/PriorityValue.hpp"
 #include "../Structures/TestingValue.hpp"
 #include "Results.hpp"
@@ -25,8 +26,10 @@ namespace Benchmark {
         std::vector<Results> benchmarks; // vektor wyników
 
         std::map<std::string, IPriorityQueue*> queues; // mapa: nazwa struktury - struktura
-        queues["PriorityQueueArray"] = new PriorityQueueArray();
-        queues["PriorityQueueHeap"] = new PriorityQueueHeap();
+//        queues["PriorityQueueArray"] = new PriorityQueueArray();
+//        queues["PriorityQueueHeap"] = new PriorityQueueHeap();
+        queues["PriorityQueueHeapMap"] = new PriroityQueueHeapMap();
+
 
         for (const auto& queue : queues) { // dla obu struktur
             for (const auto& size : TESTING_SIZES) { // dla wszystkich rozmiarów
@@ -45,6 +48,10 @@ namespace Benchmark {
                     for (int i = 0; i < TESTING_REPETITIONS; ++i){ // stowrzenie kopii struktur
                         copies[i] = new PriorityQueueHeap(dynamic_cast<PriorityQueueHeap*>(queue.second));
                     }
+                } else if (queue.first == "PriorityQueueHeapMap") { // dla kolejki na kopcu
+                    for (int i = 0; i < TESTING_REPETITIONS; ++i){ // stowrzenie kopii struktur
+                        copies[i] = new PriroityQueueHeapMap(dynamic_cast<PriroityQueueHeapMap*>(queue.second));
+                    }
                 } else { // nieznany typ kolejki - exit
                     std::cerr << "Unknown queue type: " << queue.first << std::endl;
                     exit(1);
@@ -62,9 +69,29 @@ namespace Benchmark {
                 for(int i = 0; i < TESTING_REPETITIONS; i ++){
                     delete copies[i];
                 }
+
+                if (queue.first == "PriorityQueueArray"){ // dla open addressing
+                    // delete queue.second;
+                    delete queues["PriorityQueueArray"];
+                    queues["PriorityQueueArray"] = new PriorityQueueArray();
+                } else if (queue.first == "PriorityQueueHeap") { // dla hash table array
+                    // delete queue.second;
+                    delete queues["PriorityQueueHeap"];
+                    queues["PriorityQueueHeap"] = new PriorityQueueHeap();
+                } else if (queue.first == "PriorityQueueHeapMap") { // dla cucko hash table
+                    // delete queue.second;
+                    delete queues["PriorityQueueHeapMap"];
+                    queues["PriorityQueueHeapMap"] = new PriroityQueueHeapMap();
+                } else { // nieznany typ kolejki - exit
+                    std::cerr << "Unknown queue type: " << queue.first << std::endl;
+                    exit(1);
+                }
             }
         }
 
+        delete queues["PriorityQueueArray"];
+        delete queues["PriorityQueueHeap"];
+        delete queues["PriorityQueueHeapMap"];
         return benchmarks; // zwraca wektor wyników
     }
 }
