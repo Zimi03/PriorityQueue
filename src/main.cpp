@@ -36,7 +36,8 @@ void menu(unsigned int &first)
     std::cout << "1. PriorityQueue - heap" << std::endl;
     std::cout << "2. PriorityQueue - dynamic array" << std::endl;
     std::cout << "3. PriorityQueue - heap with map_index" << std::endl;
-    std::cout << "4. Auto-test" << std::endl;
+    std::cout << "4. PriorityQueue - list" << std::endl;
+    std::cout << "5. Auto-test" << std::endl;
 
 
     std::cout << "Choose task: ";
@@ -181,7 +182,7 @@ int main(int argc, char* argv[]) {
     PriorityQueueHeap* pqHeap = nullptr;
     PriorityQueueArray* pqArray = nullptr;
     PriroityQueueHeapMap* pqHeapMap = nullptr;
-
+    PriorityQueueList* pqList = nullptr;
 
     do {
         menu(firstChocie);
@@ -382,8 +383,73 @@ int main(int argc, char* argv[]) {
                     }
                 } while (secondChoice != 0);
                 break;
+
+            case 4: //Priority Queue - List
+                std::cout << "Structure size: " ;
+                size = typeNumber<int>();
+
+                pqList = new PriorityQueueList;
+                for(int i = 0; i < size; i++){
+                    pqList->insert(PriorityValue(Utils::generateNumber(size*5),Utils::generateNumber(size)));
+                }
+                do {
+                    menuSecondLevel(firstChocie, secondChoice, size);
+                    switch (secondChoice) {
+                        case 0:
+                            std::cout << "Quiting from PriorityQueue - list" << std::endl;
+                            delete pqList;
+                            break;
+                        case 1: // insert
+                            std::cout << "Insert" << std::endl;
+                            std::cout << "Priority: " ;
+                            priority = typeNumber<int>();
+                            std::cout << "Value: " ;
+                            value = typeNumber<int>();
+                            pqList->insert(PriorityValue(priority,value));
+                            break;
+                        case 2: // extractMax
+                            std::cout << "ExtractMax" << std::endl;
+                            opt_val = pqList->extractMax();
+                            if(opt_val != std::nullopt){
+                                std::cout << "Extracted value: " << opt_val.value() << std::endl;
+                            } else std::cout << "Empty structure" << std::endl;
+                            break;
+                        case 3: // peek
+                            std::cout << "Peek" << std::endl;
+                            opt_val = pqList->peek();
+                            if(opt_val != std::nullopt){
+                                std::cout << "Peeked value: " << opt_val.value() << std::endl;
+                            } else std::cout << "Empty structure" << std::endl;
+                            break;
+                        case 4: // modifyKey
+                            std::cout << "ModifyKey" << std::endl;
+                            std::cout << "Old priority: " ;
+                            priority = typeNumber<int>();
+                            std::cout << "Value: " ;
+                            value = typeNumber<int>();
+                            std::cout << "New priority: " ;
+                            new_priority = typeNumber<int>();
+                            value = pqList->modifyKey(PriorityValue(priority,value), new_priority);
+                            if(value == 0) std::cout << "Success" << std::endl;
+                            else if (value == 1) std::cout << "The same priority" << std::endl;
+                            else if (value == 2) std::cout << "No such element" << std::endl;
+                            else if (value == 3) std::cout << "New priority less than zero" << std::endl;
+                            break;
+                        case 5: // display
+                            std::cout << "RerurnSize" << std::endl;
+                            std::cout << "Size: " << pqList->getSize() << std::endl;
+                            break;
+                        case 6: // display
+                            pqList->display();
+                            break;
+                        default:
+                            std::cout << "Wrong choice. Try again." << std::endl;
+                            break;
+                    }
+                } while (secondChoice != 0);
+                break;
                 /*  AUTO TEST   */
-            case 4:
+            case 5:
                 std::cout << std::endl << "AUTO-TEST" << std::endl;
                 std::cout << "Repetitions: " ;
                 size = typeNumber<int>();

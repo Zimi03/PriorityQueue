@@ -23,9 +23,8 @@ private:
     }
     int findValue(PriorityValue element){
         INode* it = head->getNext();
-        int temp = element.value;
         int i = 0;
-        while (dynamic_cast<Node<PriorityValue>*>(it)->getData().value != temp && i<size){
+        while (it != nullptr && dynamic_cast<Node<PriorityValue>*>(it)->getData() != element && i<size ){
             it = it->getNext();
             i++;
         }
@@ -51,11 +50,6 @@ public:
                 }
             }
         }
-    }
-
-    ~PriorityQueueList(){
-        clear();
-        delete head;
     }
 
     void insert(PriorityValue element) override{

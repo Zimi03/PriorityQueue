@@ -8,6 +8,7 @@
 #include "../Queues/PriorityQueueHeap.hpp"
 #include "../Queues/PriorityQueueArray.hpp"
 #include "../Queues/PriorityQueueHeapMap.hpp"
+#include "../Queues/PriorityQueueList.hpp"
 #include "../Structures/PriorityValue.hpp"
 #include "../Structures/TestingValue.hpp"
 #include "Results.hpp"
@@ -28,7 +29,8 @@ namespace Benchmark {
         std::map<std::string, IPriorityQueue*> queues; // mapa: nazwa struktury - struktura
 //        queues["PriorityQueueArray"] = new PriorityQueueArray();
 //        queues["PriorityQueueHeap"] = new PriorityQueueHeap();
-        queues["PriorityQueueHeapMap"] = new PriroityQueueHeapMap();
+//        queues["PriorityQueueHeapMap"] = new PriroityQueueHeapMap();
+queues["PriorityQueueList"] = new PriorityQueueList();
 
 
         for (const auto& queue : queues) { // dla obu struktur
@@ -51,6 +53,10 @@ namespace Benchmark {
                 } else if (queue.first == "PriorityQueueHeapMap") { // dla kolejki na kopcu
                     for (int i = 0; i < TESTING_REPETITIONS; ++i){ // stowrzenie kopii struktur
                         copies[i] = new PriroityQueueHeapMap(dynamic_cast<PriroityQueueHeapMap*>(queue.second));
+                    }
+                } else if (queue.first == "PriorityQueueList") { // dla kolejki na kopcu
+                    for (int i = 0; i < TESTING_REPETITIONS; ++i){ // stowrzenie kopii struktur
+                        copies[i] = new PriorityQueueList(dynamic_cast<PriorityQueueList*>(queue.second));
                     }
                 } else { // nieznany typ kolejki - exit
                     std::cerr << "Unknown queue type: " << queue.first << std::endl;
@@ -82,6 +88,10 @@ namespace Benchmark {
                     // delete queue.second;
                     delete queues["PriorityQueueHeapMap"];
                     queues["PriorityQueueHeapMap"] = new PriroityQueueHeapMap();
+                } else if (queue.first == "PriorityQueueList") { // dla cucko hash table
+                    // delete queue.second;
+                    delete queues["PriorityQueueList"];
+                    queues["PriorityQueueList"] = new PriorityQueueList();
                 } else { // nieznany typ kolejki - exit
                     std::cerr << "Unknown queue type: " << queue.first << std::endl;
                     exit(1);

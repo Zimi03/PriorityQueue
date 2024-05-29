@@ -57,10 +57,10 @@ public:
         head->setNext(nullptr);
         size = 0;
     }
+
     void init(Data data){
         insertFront(data);
     }
-
 
     void insertFront(Data data){
         INode* buf = new Node<Data>(head->getNext(), data);

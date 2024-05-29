@@ -12,6 +12,7 @@ add_executable(app "src/main.cpp"
         "src/Structures/List(head).hpp"
         src/Structures/INode.h
         src/Structures/head.hpp
-        src/Structures/node.hpp)
+        src/Structures/node.hpp
+)
 target_link_libraries(app app_libs)
 target_include_directories(app INTERFACE src/Structures src/Queues src/Tools src/Lists)

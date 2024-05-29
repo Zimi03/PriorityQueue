@@ -19,9 +19,8 @@ private:
     }
 
     int findValue(PriorityValue element) {
-        int temp = element.value;
         int i = 0;
-        while (array[i].value != temp && i < size) {
+        while (array[i] != element && i < size) {
             i++;
         }
         if(i == size) return -1;
