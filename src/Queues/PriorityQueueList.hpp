@@ -79,6 +79,7 @@ public:
         buf.value = element.value;
         buf.priority = priority;
         List_h<PriorityValue>::insertFront(buf);
+        return 0;
     }
     int getSize() override{
         return size;

@@ -16,6 +16,7 @@ public:
     }
     int setNext(INode* _next) override{
      next = _next;
+        return 0;
     }
     INode* getPrevious() override{
         return nullptr;
