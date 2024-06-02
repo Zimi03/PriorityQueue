@@ -453,7 +453,9 @@ int main(int argc, char* argv[]) {
                 std::cout << std::endl << "AUTO-TEST" << std::endl;
                 std::cout << "Repetitions: " ;
                 size = typeNumber<int>();
-                autotest(size);
+                for(int i = 0; i < 3; i++){
+                    autotest(size);
+                }
                 break;
             default:
                 std::cout << "Wrong choice. Try again." << std::endl;

@@ -146,7 +146,7 @@ public:
         map_index->insert(element, size);
         Pair<PriorityValue, DynamicArray<unsigned int>*>* para = map_count->search(PriorityValue(element.priority, element.value));
         if(para != nullptr){ // jeśli jest klucz w mapie
-            para->value->insertBack(element.count);
+            para->value->insertBack(element.count); // dodanie do odpowiedniego wpisu w map_count kolejnej wartości count
         } else{ // jeśli nie ma klucza w mapie
             DynamicArray<unsigned int>* tmp = new DynamicArray<unsigned int>;
             tmp->insertBack(element.count);

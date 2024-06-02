@@ -8,6 +8,7 @@ public:
     Head(){
         next = nullptr;
     }
+
     INode* getNext() override{
         return next;
     }
