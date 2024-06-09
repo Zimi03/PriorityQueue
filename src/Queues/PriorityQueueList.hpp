@@ -5,6 +5,7 @@
 #include "../Structures/List(head).hpp"
 #include <iostream>
 
+
 class PriorityQueueList : public IPriorityQueue, private List_h<PriorityValue> {
 private:
     int findMax() const {
@@ -13,7 +14,7 @@ private:
         int currPriority = -1;
         int maxIndex = 0;
 
-        for (int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) { //iterujemy po całej liście w celu znalezienia elementu o najwyższym priorytecie
             currPriority = dynamic_cast<Node<PriorityValue>*>(it)->getData().priority;
             if (currPriority > maxPriority) {
                 maxPriority = currPriority;
@@ -28,8 +29,8 @@ private:
         INode* it = head->getNext();
         int i = 0;
 
-        while (it != nullptr) {
-            if (dynamic_cast<Node<PriorityValue>*>(it)->getData() == element) {
+        while (it != nullptr) { // iterujemy po całej liście
+            if (dynamic_cast<Node<PriorityValue>*>(it)->getData() == element) { //jeśli znajdziemy element zwracamy jego indeks
                 return i;
             }
             it = it->getNext();
@@ -58,16 +59,16 @@ public:
     }
 
     int modifyKey(PriorityValue element, int priority) override {
-        if (priority < 0) return 3;
+        if (priority < 0) return 3; // zwracamy 3 jeśli błędny element
 
         int index = findValue(element);
-        if (index == -1) return 2;
+        if (index == -1) return 2; // nie znaleziono elementu w liście
 
         PriorityValue buf = element;
         buf.priority = priority;
 
         List_h<PriorityValue>::remove(index);
-        List_h<PriorityValue>::insertFront(std::move(buf));
+        List_h<PriorityValue>::insertFront(std::move(buf)); //dodajemy element o nowym priorytecie na początek listy
 
         return 0;
     }
