@@ -18,7 +18,7 @@ class BinaryHeapMap {
     int size = 0;
 
     void swap(int a, int b){
-        if(!array->swap(a, b)) {
+        if(!array->swap(a, b)) { // jeśli zamiana udana to zaktualizuj dane w map_index
             Pair<PriorityValueOrderMap, int>* para1 = map_index->search(array->get(a).value());
             Pair<PriorityValueOrderMap, int>* para2 = map_index->search(array->get(b).value());
             para1->value = a;
@@ -37,6 +37,7 @@ class BinaryHeapMap {
             PriorityValueOrderMap pvom = array->get(i).value();
             map_index->insert(pvom, i);
 
+            // operacje na map_conut
             Pair<PriorityValue, DynamicArray<unsigned int>*>* para = map_count->search(PriorityValue(pvom.priority, pvom.value));
             if(para != nullptr){ // jeśli jest klucz w mapie
                 para->value->insertBack(pvom.count);
@@ -57,8 +58,7 @@ class BinaryHeapMap {
         int largest = parent;
         int left = start + 2 * (parent - start) + 1;
         int right = start + 2 * (parent - start) + 2;
-        // PriorityValueOrder largestValue = heap->get(largest)->value; // odczytanie wartosci rodzica
-        // PriorityValueOrder
+
         // szukamy dziecka większego od rodzica
         if (left <= end && array->get(left).value() > array->get(largest).value()) {
             largest = left;
@@ -78,8 +78,8 @@ class BinaryHeapMap {
         int parent = (child-1)/2;
 
         if(array->get(child).value() > array->get(parent).value()){
-            swap(child, parent);
-            upHeap(start, end, parent);
+            swap(child, parent);  // większe dziecko zamieniane z rodzicem
+            upHeap(start, end, parent);  // kontynuujemy z pozycji gdzie był rodzic
         }
         return 0;
     }
@@ -141,16 +141,21 @@ public:
         delete map_count;
     }
 
+    /**
+     * Inserts element into binary heap
+     * @param element
+     */
     void insert(PriorityValueOrderMap element) {
-        array->insertBack(element);
-        map_index->insert(element, size);
+        array->insertBack(element);  // dodanie elementu do kopca
+        map_index->insert(element, size);  // dodanie elementu do map_index
+
         Pair<PriorityValue, DynamicArray<unsigned int>*>* para = map_count->search(PriorityValue(element.priority, element.value));
-        if(para != nullptr){ // jeśli jest klucz w mapie
+        if(para != nullptr){ // jeśli jest klucz w mapie map_count
             para->value->insertBack(element.count); // dodanie do odpowiedniego wpisu w map_count kolejnej wartości count
         } else{ // jeśli nie ma klucza w mapie
-            DynamicArray<unsigned int>* tmp = new DynamicArray<unsigned int>;
-            tmp->insertBack(element.count);
-            map_count->insert(PriorityValue(element.priority, element.value), tmp);
+            DynamicArray<unsigned int>* tmp = new DynamicArray<unsigned int>;  // stworzenie nowej tablicy dynamicznej dla elementu
+            tmp->insertBack(element.count);  // powiązanie elementu z count
+            map_count->insert(PriorityValue(element.priority, element.value), tmp);  // powiązanie elementu z count
         }
         size = array->getSize();
         upHeap(0, size-1, size-1); // upHeap od wstawionego elementu
@@ -169,25 +174,17 @@ public:
         } else {
             size = array->getSize();
             downHeap(0, size - 1, 0); // downHeap od korzenia
-            map_index->remove(tmp.value());
+            map_index->remove(tmp.value());  // usunięcie wpisu z map_index
 
+            // aktualizacja map_conut
             Pair<PriorityValue, DynamicArray<unsigned int>*>* para = map_count->search(PriorityValue(tmp.value().priority, tmp.value().value));
             if(para != nullptr) { // jeśli jest klucz w mapie to usuń z tablicy (wartości) count
                 int size_para_array = para->value->getSize();
                 if(size_para_array == 1) {
                     map_count->remove(PriorityValue(tmp.value().priority, tmp.value().value));
-
                 } else{
                     para->value->removeFront();
                 }
-//                for (int i = 0; i < size_para_array; i++) {
-//                    if (para->value->get(i) == tmp.value().count) {
-//                        para->value->remove(i);
-//                    }
-//                }
-//                if(para->value->isEmpty()){ // jeśli tablica jest pusta to usuń cąły wpis z mapy
-//                    map_count->remove(PriorityValue(tmp.value().priority, tmp.value().value));
-//                }
             }
             return tmp.value();
         }
@@ -204,8 +201,6 @@ public:
         else return tmp.value();
     }
 
-    // std::optional<PriorityValueOrder> find(PriorityValueOrder element);
-
     /**
      * Removes one element with given priority and value
      * @param element
@@ -213,7 +208,6 @@ public:
      * @return 1 - no such element
      */
     int remove(PriorityValue element) {
-//        PriorityValueOrderMap tmp(element.priority, element.value, 0); // znacznik counter nie ma wpływu na operacje ==
         int index = find(element); // znalezienie miejsca w tablicy do usunięcia
         if (index < 0) {
             return 1;
@@ -305,13 +299,19 @@ public:
         return modifyKey(element, element.priority - 1, count);
     }
 
+    /**
+     * Returns size of binary heap
+     * @return
+     */
     int getSize() {
         return size;
     }
 
+    /**
+     * Displays binary heap by levels
+     */
     void display() {
-        //    std::cout << "Level: " << 0 << std::endl;
-        //    std::cout << heap->get(0).value() << ", "<< std::endl;
+
         for (int i = 0, j = 0; i < size; i = i*2+1, j ++) {
             std::cout << "Level: " << j << std::endl;
             for(int k = i; k <= 2*i && k < size; k++){
